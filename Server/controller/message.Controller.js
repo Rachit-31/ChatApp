@@ -3,7 +3,7 @@ export const sendMessage= async(req, res)=>{
         const {message}=req.body;
         const {id}= req.params;
 
-        const senderId = req.userId;
+        const senderId = req.user._id;
 
 
     } catch (error) {
@@ -11,4 +11,4 @@ export const sendMessage= async(req, res)=>{
         res.status(500).json({error: "Internal server error"})
     }
 }
-//1;12:40
+//1:12:40
