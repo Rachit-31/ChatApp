@@ -5,17 +5,15 @@ import express from "express";
 import dotenv from "dotenv";
 import path from "path";
 import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
-
-
-import authRoutes from "./Routes/auth.routes.js";
 
 
 import connectToMongoDb from "./db/connectToMongoDb.js";
 
 const app=express();
 
-dotenv.config();
+dotenv.config({
+    path:'./.env'
+});
 
 const PORT = process.env.PORT || 5000;
 
@@ -23,10 +21,8 @@ const PORT = process.env.PORT || 5000;
  app.use(express.json()); //to parse the incomming request with json payloads(from req.body)
  app.use(express.urlencoded({ extended: true }));
 
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
 
-
+import authRoutes from "./Routes/auth.routes.js";
 app.use("/api/auth", authRoutes);
 
 

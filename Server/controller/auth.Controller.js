@@ -7,14 +7,13 @@ export const signup = async (req, res) => {
 		if (password !== confirmPassword) {
 			return res.status(400).json({ error: "Passwords don't match" });
 		}
-		console.log("required body",fullName);
+
 		const user = await User.findOne({ username });
 
 		if (user) {
 			return res.status(400).json({ error: "Username already exists" });
 		}
 
-		// HASH PASSWORD HERE
 
 
 		// https://avatar-placeholder.iran.liara.run/
@@ -22,7 +21,7 @@ export const signup = async (req, res) => {
 		const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
 		const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
-		const newUser =await  User.create({
+		const newUser = new User({
 			fullName,
 			username,
 			password,
@@ -30,21 +29,19 @@ export const signup = async (req, res) => {
 			profilePic: gender === "male" ? boyProfilePic : girlProfilePic,
 		});
 
-		const createdUser = await User.findById(newUser._id).select(
-			//neeche vo cheeje hai jo nahi chahiye
-			"-password "
-		)
-		if (!createdUser) {
-			throw new apiError(500,"Something went wrong while registering a user")
-		}
-	
+		if (newUser) {
 			// Generate JWT token here
-			// res.status(201).json({
-			// 	_id: newUser._id,
-			// 	fullName: newUser.fullName,
-			// 	username: newUser.username,
-			// 	profilePic: newUser.profilePic,
-			// });
+			await newUser.save();
+
+			res.status(201).json({
+				_id: newUser._id,
+				fullName: newUser.fullName,
+				username: newUser.username,
+				profilePic: newUser.profilePic,
+			});
+		} else {
+			res.status(400).json({ error: "Invalid user data" });
+		}
 	} catch (error) {
 		console.log("Error in signup controller", error.message);
 		res.status(500).json({ error: "Internal Server Error" });
