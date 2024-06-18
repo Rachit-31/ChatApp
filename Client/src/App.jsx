@@ -1,9 +1,9 @@
 function App() {
 
   return (
-    <>
-    <button className="btn btn-primary">Primary</button>
-    </>
+    <div className="p-4 h-screen flex items-center justify-center">
+    h
+    </div>
   )
 }
 
