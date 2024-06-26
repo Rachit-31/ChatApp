@@ -3,17 +3,17 @@ import GenderCheckbox from "./GenderCheckbox"
 import { Link } from 'react-router-dom';
 
 const SignUp = () => {
-  const [inputs, setInputs]= useState({
-    fullName: '',
-    username:'',
-    password:'',
-    confirmPassword:'',
-    gender:''
-  })
+	const [inputs, setInputs] = useState({
+		fullName: "",
+		username: "",
+		password: "",
+		confirmPassword: "",
+		gender: "",
+	});
 
-  const handleCheckboxChange = (gender) =>{
-    setInputs({...inputs.gender})
-  }
+	const handleCheckboxChange = (gender) => {
+		setInputs({ ...inputs, gender });
+	};
   
   const handleSubmit = (e) =>{
     e.preventDefault();
@@ -34,7 +34,7 @@ const SignUp = () => {
             <input type='text'
 							placeholder='Rachit Jain'
 							className='w-full input input-bordered  h-10' value={inputs.fullName}
-              onChange ={ ( e ) => setInputs({...inputs, fullName: e.target.value})} />
+              onChange={(e) => setInputs({ ...inputs, fullName: e.target.value })} />
           </div>
 
           <div>
@@ -56,7 +56,7 @@ const SignUp = () => {
 							placeholder='Enter Password'
 							className='w-full input input-bordered h-10'
               value={inputs.password}
-              onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
+							onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
               />
           </div>
 
@@ -66,10 +66,13 @@ const SignUp = () => {
             </label>
             <input type="password"
                     placeholder="confirm password"
-                    className="w-full input input-bordered h-10" />
+                    className="w-full input input-bordered h-10" 
+                    value={inputs.confirmPassword}
+							      onChange={(e) => setInputs({ ...inputs, confirmPassword: e.target.value })}
+                    />
           </div>
 
-          <GenderCheckbox oncheckboxChange = {handleCheckboxChange} selectedGender ={inputs.gender} />
+          <GenderCheckbox onCheckboxChange={handleCheckboxChange} selectedGender={inputs.gender} />
 
           <Link to="/login" className="text-sm hover:underline hover:text-blue-600 mt-2 inline-block">Already have an account?</Link>
           <div>
