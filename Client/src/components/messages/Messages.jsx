@@ -3,7 +3,7 @@ import Message from "./Message"
 import MessageSkeleton from "../skeletons/MessageSkeleton";
 const Messages = () => {
   const { messages, loading } = useGetMessages();
-  console.log(messages)
+  
   return (
     <div className="px-4 flex-1 overflow-auto">
       {!loading &&
