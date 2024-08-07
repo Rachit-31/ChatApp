@@ -6,11 +6,11 @@ import dotenv from "dotenv";
 import path from "path";
 import mongoose from 'mongoose';
 import cookieParser from "cookie-parser";
+import { app } from "./socket/socket.js";
 
 
 import connectToMongoDb from "./db/connectToMongoDb.js";
 
-const app=express();
 
 dotenv.config();
 
