@@ -13,7 +13,7 @@ import connectToMongoDb from "./db/connectToMongoDb.js";
 
 
 dotenv.config();
-
+const __dirname = path.resolve();
 const PORT = process.env.PORT || 5000;
 
 
@@ -29,12 +29,11 @@ app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes)
 app.use("/api/users", userRoutes)
 
+app.use(express.static(path.join(__dirname, "/client/dist")));
 
-
-app.get("/",(req,res)=>{
-    // root route
-    res.send("Hello world")
-})
+app.get("*", (req, res) => {
+	res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 
 
 app.listen(PORT,()=>{
