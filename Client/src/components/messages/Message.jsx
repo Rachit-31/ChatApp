@@ -51,7 +51,7 @@ const Message = ({ message }) => {
         {formattedTime}
       </div>
 
-      {fromMe && <div><button disabled={loading} onClick={handleDelete}>{loading ? 'Deleting...' : <ImBin className="text-red-500" />}</button></div>}
+      {fromMe && <div><button disabled={loading} onClick={handleDelete}>{loading ? className="loading loading-spinner" : <ImBin className="text-red-500" />}</button></div>}
     </div>
   );
 };
