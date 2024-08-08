@@ -23,8 +23,8 @@ const Message = ({ message }) => {
 		  });
 	
 		  if (res.ok) {
-			setMessages(message.filter((msg) => msg._id !== message._id));
-			// window.location.reload(); 
+			// setMessages(message.filter((msg) => msg._id !== message._id));
+			window.location.reload(); 
 		  } else {
 			const error = await res.json();
 			console.error(error.message);
@@ -51,7 +51,7 @@ const Message = ({ message }) => {
         {formattedTime}
       </div>
 
-      {fromMe && <div><button onClick={handleDelete}><ImBin className="text-red-500" /></button></div>}
+      {fromMe && <div><button disabled={loading} onClick={handleDelete}>{loading ? 'Deleting...' : <ImBin className="text-red-500" />}</button></div>}
     </div>
   );
 };
