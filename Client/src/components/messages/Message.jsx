@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import { extractTime } from "../../utils/extractTime";
 import useConversation from "../../zustand/useConversation";
 import { ImBin } from "react-icons/im";
 
 const Message = ({ message }) => {
+	const [loading, setLoading] = useState(false);
 	const { authUser } = useAuthContext();
 	const { selectedConversation } = useConversation();
 	const fromMe = message.senderId === authUser._id;
@@ -13,7 +15,26 @@ const Message = ({ message }) => {
 	const bubbleBgColor = fromMe ? "bg-blue-500" : "";
 
 	const shakeClass = message.shouldShake ? "shake" : "";
-
+	const handleDelete = async () => {
+		setLoading(true);
+		try {
+		  const res = await fetch(`/api/messages/${message._id}`, {
+			method: 'DELETE',
+		  });
+	
+		  if (res.ok) {
+			setMessages(message.filter((msg) => msg._id !== message._id));
+			// window.location.reload(); 
+		  } else {
+			const error = await res.json();
+			console.error(error.message);
+		  }
+		} catch (error) {
+		  console.error("Error deleting message:", error);
+		}finally{
+			setLoading(false); 
+		}
+	  };
 	return (
     <div className={`chat ${chatClassName}`}>
       <div className="chat-image avatar">
@@ -30,7 +51,7 @@ const Message = ({ message }) => {
         {formattedTime}
       </div>
 
-      {fromMe && <div><button><ImBin className="text-red-500" /></button></div>}
+      {fromMe && <div><button onClick={handleDelete}><ImBin className="text-red-500" /></button></div>}
     </div>
   );
 };
